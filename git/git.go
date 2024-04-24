@@ -23,10 +23,10 @@ var excludeFromDiff = []string{
 
 type Command struct {
 	// Generate diffs with <n> lines of context instead of the usual three
-	diffUnified     int
-	excludeList     []string
-	isAmend         bool
-	isLatestTwoTags bool // review latest two tags commit changes diff
+	diffUnified   int
+	excludeList   []string
+	isAmend       bool
+	diffTagPrefix string // review latest two tags commit changes diff tags is grep by this string. If empty, ignore this option.
 }
 
 func (c *Command) excludeFiles() []string {
@@ -37,14 +37,40 @@ func (c *Command) excludeFiles() []string {
 	return excludedFiles
 }
 
+// IsDiffTag judge whether to compare the differences between the latest two tags
+func (c *Command) IsDiffTag() (is bool, tag1, tag2 string) {
+	if c.diffTagPrefix != "" {
+		is = true
+		tagCmd := c.latestTwoTags(c.diffTagPrefix)
+		output, err := tagCmd.Output()
+		if err != nil {
+			return false, "", ""
+		}
+		tags := strings.Split(string(output), " ")
+		if len(tags) == 2 {
+			tag1, tag2 = tags[0], tags[1]
+		}
+	}
+	return
+}
+
+func (c *Command) latestTwoTags(tagGrepHead string) *exec.Cmd {
+
+	cmdStr := fmt.Sprintf("git tag --sort=-creatordate | grep '^%s' | head -n 2 | tr '\\n' ' ' | sed 's/ $//'", tagGrepHead)
+
+	return exec.Command("bash", "-c", cmdStr)
+}
+
 func (c *Command) diffNames() *exec.Cmd {
 	args := []string{
 		"diff",
 		"--name-only",
 	}
 
-	if c.isLatestTwoTags {
-		args = append(args, "$(git tag --sort=-creatordate | head -n 2 | tr '\\n' ' ')")
+	if c.diffTagPrefix != "" {
+		if is, tag1, tag2 := c.IsDiffTag(); is && tag1 != "" && tag2 != "" {
+			args = append(args, tag1, tag2)
+		}
 	} else {
 		if c.isAmend {
 			args = append(args, "HEAD^", "HEAD")
@@ -70,8 +96,10 @@ func (c *Command) diffFiles() *exec.Cmd {
 		"--unified=" + strconv.Itoa(c.diffUnified),
 	}
 
-	if c.isLatestTwoTags {
-		args = append(args, "$(git tag --sort=-creatordate | head -n 2 | tr '\\n' ' ')")
+	if c.diffTagPrefix != "" {
+		if is, tag1, tag2 := c.IsDiffTag(); is && tag1 != "" && tag2 != "" {
+			args = append(args, tag1, tag2)
+		}
 	} else {
 		if c.isAmend {
 			args = append(args, "HEAD^", "HEAD")
@@ -216,8 +244,9 @@ func New(opts ...Option) *Command {
 	cmd := &Command{
 		diffUnified: cfg.diffUnified,
 		// Append the user-defined excludeList to the default excludeFromDiff
-		excludeList: append(excludeFromDiff, cfg.excludeList...),
-		isAmend:     cfg.isAmend,
+		excludeList:   append(excludeFromDiff, cfg.excludeList...),
+		isAmend:       cfg.isAmend,
+		diffTagPrefix: cfg.diffTagPrefix,
 	}
 
 	return cmd

@@ -25,7 +25,7 @@ func init() {
 	reviewCmd.Flags().StringVar(&commitLang, "lang", "en", "summarizing language uses English by default")
 	reviewCmd.Flags().StringSliceVar(&excludeList, "exclude_list", []string{}, "exclude file from git diff command")
 	reviewCmd.Flags().BoolVar(&commitAmend, "amend", false, "replace the tip of the current branch by creating a new commit.")
-	reviewCmd.Flags().BoolVar(&commitAmend, "latest_tags_2", false, "review latest two tags commit changes diff")
+	reviewCmd.Flags().StringVar(&diffTagPrefix, "diff_tag_prefix", "", "review latest two tags commit changes diff")
 }
 
 var reviewCmd = &cobra.Command{
@@ -40,13 +40,19 @@ var reviewCmd = &cobra.Command{
 			git.WithDiffUnified(viper.GetInt("git.diff_unified")),
 			git.WithExcludeList(viper.GetStringSlice("git.exclude_list")),
 			git.WithEnableAmend(commitAmend),
+			git.WithDiffTagPrefix(diffTagPrefix),
 		)
+
 		diff, err := g.DiffFiles()
 		if err != nil {
 			return err
 		}
 
-		color.Green("Code review your changes using " + viper.GetString("openai.model") + " model")
+		if is, tag1, tag2 := g.IsDiffTag(); is && tag1 != "" && tag2 != "" {
+			color.Green("Code review your changes between " + tag1 + " and " + tag2 + ", using " + viper.GetString("openai.model") + " model")
+		} else {
+			color.Green("Code review your changes using " + viper.GetString("openai.model") + " model")
+		}
 		client, err := openai.New(
 			openai.WithToken(viper.GetString("openai.api_key")),
 			openai.WithModel(viper.GetString("openai.model")),

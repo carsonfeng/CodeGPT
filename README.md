@@ -90,6 +90,7 @@ This will create a `.zcode.yaml` file in your home directory ($HOME/.config/zcod
 * **openai.max_tokens**: default max tokens is `300`. see reference [max_tokens](https://platform.openai.com/docs/api-reference/completions/create#completions/create-max_tokens).
 * **openai.temperature**: default temperature is `1`. see reference [temperature](https://platform.openai.com/docs/api-reference/completions/create#completions/create-temperature).
 * **git.diff_unified**: generate diffs with `<n>` lines of context, default is `3`.
+
 * **git.exclude_list**: exclude file from `git diff` command.
 * **openai.provider**: default service provider is `openai`, you can change to `azure`.
 * **openai.model_name**: model deployment name (for azure).

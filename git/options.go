@@ -1,5 +1,7 @@
 package git
 
+import "fmt"
+
 // Option is an interface that specifies instrumentation configuration options.
 type Option interface {
 	apply(*config)
@@ -42,9 +44,19 @@ func WithEnableAmend(val bool) Option {
 	})
 }
 
+// WithDiffTagPrefix returns an Option that sets the diffTagPrefix field of a config object to the given value.
+func WithDiffTagPrefix(val string) Option {
+	return optionFunc(func(c *config) {
+		c.diffTagPrefix = val
+		fmt.Printf("diffTagPrefix: %s\n", c.diffTagPrefix)
+	})
+
+}
+
 // config is a struct that stores configuration options for the instrumentation.
 type config struct {
-	diffUnified int
-	excludeList []string
-	isAmend     bool
+	diffUnified   int
+	excludeList   []string
+	isAmend       bool
+	diffTagPrefix string
 }
