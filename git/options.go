@@ -1,7 +1,5 @@
 package git
 
-import "fmt"
-
 // Option is an interface that specifies instrumentation configuration options.
 type Option interface {
 	apply(*config)
@@ -48,7 +46,7 @@ func WithEnableAmend(val bool) Option {
 func WithDiffTagPrefix(val string) Option {
 	return optionFunc(func(c *config) {
 		c.diffTagPrefix = val
-		fmt.Printf("diffTagPrefix: %s\n", c.diffTagPrefix)
+		//fmt.Printf("diffTagPrefix: %s\n", c.diffTagPrefix)
 	})
 
 }
