@@ -2,7 +2,7 @@ GO ?= go
 EXECUTABLE := codegpt
 GOFILES := $(shell find . -type f -name "*.go")
 TAGS ?=
-LDFLAGS ?= -X 'github.com/carsonfeng/CodeGPT/cmd.Version=$(VERSION)' -X 'github.com/carsonfeng/CodeGPT/cmd.Commit=$(COMMIT)'
+LDFLAGS ?= -X 'github.com/carsonfeng/ZCode/cmd.Version=$(VERSION)' -X 'github.com/carsonfeng/ZCode/cmd.Commit=$(COMMIT)'
 
 ifneq ($(shell uname), Darwin)
 	EXTLDFLAGS = -extldflags "-static" $(null)

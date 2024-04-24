@@ -4,7 +4,7 @@ import (
 	"embed"
 	"log"
 
-	"github.com/carsonfeng/CodeGPT/util"
+	"github.com/carsonfeng/ZCode/util"
 )
 
 //go:embed templates/*

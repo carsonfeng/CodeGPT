@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/appleboy/com/file"
-	"github.com/carsonfeng/CodeGPT/util"
+	"github.com/carsonfeng/ZCode/util"
 )
 
 var excludeFromDiff = []string{

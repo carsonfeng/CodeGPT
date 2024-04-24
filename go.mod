@@ -1,4 +1,4 @@
-module github.com/carsonfeng/CodeGPT
+module github.com/carsonfeng/ZCode
 
 go 1.20
 

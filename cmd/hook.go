@@ -3,7 +3,7 @@ package cmd
 import (
 	"errors"
 
-	"github.com/carsonfeng/CodeGPT/git"
+	"github.com/carsonfeng/ZCode/git"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"

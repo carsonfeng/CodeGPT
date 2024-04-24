@@ -4,10 +4,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/carsonfeng/CodeGPT/git"
-	"github.com/carsonfeng/CodeGPT/openai"
-	"github.com/carsonfeng/CodeGPT/prompt"
-	"github.com/carsonfeng/CodeGPT/util"
+	"github.com/carsonfeng/ZCode/git"
+	"github.com/carsonfeng/ZCode/openai"
+	"github.com/carsonfeng/ZCode/prompt"
+	"github.com/carsonfeng/ZCode/util"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"

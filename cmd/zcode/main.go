@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/carsonfeng/CodeGPT/cmd"
+	"github.com/carsonfeng/ZCode/cmd"
 
 	"github.com/appleboy/graceful"
 )

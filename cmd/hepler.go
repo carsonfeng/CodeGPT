@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/appleboy/com/file"
-	"github.com/carsonfeng/CodeGPT/openai"
-	"github.com/carsonfeng/CodeGPT/prompt"
-	"github.com/carsonfeng/CodeGPT/util"
+	"github.com/carsonfeng/ZCode/openai"
+	"github.com/carsonfeng/ZCode/prompt"
+	"github.com/carsonfeng/ZCode/util"
 
 	"github.com/spf13/viper"
 )
