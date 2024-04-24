@@ -46,6 +46,7 @@ var modelMaps = map[string]string{
 	"ada-002":                            openai.GPT3Ada002,
 	"babbage":                            openai.GPT3Babbage,
 	"babbage-002":                        openai.GPT3Babbage002,
+	groq.LLaMA370bChat.String():          groq.LLaMA370bChat.GetModel(),
 	groq.LLaMA270bChat.String():          groq.LLaMA270bChat.GetModel(),
 	groq.Mixtral8x7bInstructV01.String(): groq.Mixtral8x7bInstructV01.GetModel(),
 	groq.Gemma7bIt.String():              groq.Gemma7bIt.GetModel(),
@@ -194,6 +195,7 @@ func (c *Client) Completion(
 		openai.GPT4VisionPreview,
 		openai.GPT4Turbo,
 		openai.GPT4Turbo20240409,
+		groq.LLaMA370bChat.GetModel(),
 		groq.LLaMA270bChat.GetModel(),
 		groq.Mixtral8x7bInstructV01.GetModel(),
 		groq.Gemma7bIt.GetModel():
