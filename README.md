@@ -1,4 +1,4 @@
-# CodeGPT
+# Zcode
 
 [![Lint and Testing](https://github.com/carsonfeng/CodeGPT/actions/workflows/testing.yml/badge.svg?branch=main)](https://github.com/carsonfeng/CodeGPT/actions/workflows/testing.yml)
 [![codecov](https://codecov.io/gh/carsonfeng/CodeGPT/branch/main/graph/badge.svg)](https://codecov.io/gh/carsonfeng/CodeGPT)
@@ -35,20 +35,20 @@ A CLI written in [Go](https://go.dev) language that writes git commit messages o
 Install from [Homebrew](http://brew.sh/) on MacOS
 
 ```sh
-brew tap appleboy/tap
-brew install codegpt
+brew tap carsonfeng/tap
+brew install zcode
 ```
 
 Install from [Chocolatey](https://chocolatey.org/install) on Windows
 
 ```sh
-choco install codegpt
+choco install zcode
 ```
 
 The pre-compiled binaries can be downloaded from [release page](https://github.com/carsonfeng/CodeGPT/releases).Change the binary permissions to `755` and copy the binary to the system bin directory. Use the `codegpt` command as shown below.
 
 ```sh
-$ codegpt version
+$ zcode version
 version: v0.4.3 commit: xxxxxxx
 ```
 
@@ -75,7 +75,7 @@ export OPENAI_API_KEY=sk-xxxxxxx
 or store your API key in custom config file.
 
 ```sh
-codegpt config set openai.api_key sk-xxxxxxx
+zcode config set openai.api_key sk-xxxxxxx
 ```
 
 This will create a `.zcode.yaml` file in your home directory ($HOME/.config/zcode/.zcode.yaml). The following options are available.
@@ -109,10 +109,10 @@ Please get the `API key`, `Endpoint` and `Model deployments` list from Azure Res
 Update your config file.
 
 ```sh
-codegpt config set openai.provider azure
-codegpt config set openai.base_url https://xxxxxxxxx.openai.azure.com/
-codegpt config set openai.api_key xxxxxxxxxxxxxxxx
-codegpt config set openai.model_name xxxxx-gpt-35-turbo
+zcode config set openai.provider azure
+zcode config set openai.base_url https://xxxxxxxxx.openai.azure.com/
+zcode config set openai.api_key xxxxxxxxxxxxxxxx
+zcode config set openai.model_name xxxxx-gpt-35-turbo
 ```
 
 ### How to change to [Groq][30] API Service
@@ -120,10 +120,10 @@ codegpt config set openai.model_name xxxxx-gpt-35-turbo
 Please get the `API key` from Groq API Service, please vist [here][31]. Update the `base_url` and `api_key` in your config file.
 
 ```sh
-codegpt config set openai.provider openai
-codegpt config set openai.base_url https://api.groq.com/openai/v1
-codegpt config set openai.api_key gsk_xxxxxxxxxxxxxx
-codegpt config set openai.model LLaMA2-70b-chat
+zcode config set openai.provider openai
+zcode config set openai.base_url https://api.groq.com/openai/v1
+zcode config set openai.api_key gsk_xxxxxxxxxxxxxx
+zcode config set openai.model LLaMA2-70b-chat
 ```
 
 Support the [following models][32]:
@@ -138,15 +138,15 @@ Support the [following models][32]:
 
 ## Usage
 
-There are two methods for generating a commit message using the `codegpt` command. The first is CLI mode, and the second is Git Hook.
+There are two methods for generating a commit message using the `zcode` command. The first is CLI mode, and the second is Git Hook.
 
 ### CLI mode
 
-You can call `codegpt` directly to generate a commit message for your staged changes:
+You can call `zcode` directly to generate a commit message for your staged changes:
 
 ```sh
 git add <files...>
-codegpt commit --preview
+zcode commit --preview
 ```
 
 The commit message is shown below.
@@ -169,7 +169,7 @@ Write the commit message to .git/COMMIT_EDITMSG file
 or translate all git commit messages into a different language (`Traditional Chinese`, `Simplified Chinese` or `Japanese`)
 
 ```sh
-codegpt commit --lang zh-tw --preview
+zcode commit --lang zh-tw --preview
 ```
 
 Consider the following outcome:
@@ -181,10 +181,10 @@ We are trying to summarize a title for pull request
 We are trying to translate a git commit message to Traditional Chinese language
 ================Commit Summary====================
 
-功能：重構 codegpt commit 命令標記
+功能：重構 zcode commit 命令標記
 
-- 將「codegpt commit」命令新增「預覽」標記
-- 從「codegpt commit」命令中移除「--disableCommit」標記
+- 將「zcode commit」命令新增「預覽」標記
+- 從「zcode commit」命令中移除「--disableCommit」標記
 
 ==================================================
 Write the commit message to .git/COMMIT_EDITMSG file
@@ -193,7 +193,7 @@ Write the commit message to .git/COMMIT_EDITMSG file
 You can replace the tip of the current branch by creating a new commit. just use `--amend` flag
 
 ```sh
-codegpt commit --amend
+zcode commit --amend
 ```
 
 ## Change commit message template
@@ -209,14 +209,14 @@ Default commit message template as following:
 change format with template string using `--template_string` parameter:
 
 ```sh
-codegpt commit --preview --template_string \
+zcode commit --preview --template_string \
   "[{{ .summarize_prefix }}]: {{ .summarize_title }}"
 ```
 
 change format with template file using `--template_file` parameter:
 
 ```sh
-codegpt commit --preview --template_file your_file_path
+zcode commit --preview --template_file your_file_path
 ```
 
 Add custom variable to git commit message template:
@@ -232,14 +232,14 @@ Add custom variable to git commit message template:
 Add custom variable to git commit message template using `--template_vars` parameter:
 
 ```sh
-codegpt commit --preview --template_file your_file_path --template_vars \
+zcode commit --preview --template_file your_file_path --template_vars \
   JIRA_URL=https://jira.example.com/ABC-123
 ```
 
 Load custom variable from file using `--template_vars_file` parameter:
 
 ```sh
-codegpt commit --preview --template_file your_file_path --template_vars_file your_file_path
+zcode commit --preview --template_file your_file_path --template_vars_file your_file_path
 ```
 
 See the `template_vars_file` format as following:
@@ -250,14 +250,14 @@ JIRA_URL=https://jira.example.com/ABC-123
 
 ### Git hook
 
-You can also use the prepare-commit-msg hook to integrate `codegpt` with Git. This allows you to use Git normally and edit the commit message before committing.
+You can also use the prepare-commit-msg hook to integrate `zcode` with Git. This allows you to use Git normally and edit the commit message before committing.
 
 #### Install
 
 You want to install the hook in the Git repository:
 
 ```sh
-codegpt hook install
+zcode hook install
 ```
 
 #### Uninstall
@@ -265,7 +265,7 @@ codegpt hook install
 You want to remove the hook from the Git repository:
 
 ```sh
-codegpt hook uninstall
+zcode hook uninstall
 ```
 
 Stage your files and commit after installation:
@@ -275,7 +275,7 @@ git add <files...>
 git commit
 ```
 
-`codegpt` will generate the commit message for you and pass it back to Git. Git will open it with the configured editor for you to review/edit it. Then, to commit, save and close the editor!
+`zcode` will generate the commit message for you and pass it back to Git. Git will open it with the configured editor for you to review/edit it. Then, to commit, save and close the editor!
 
 ```sh
 $ git commit
@@ -299,16 +299,16 @@ Write the commit message to .git/COMMIT_EDITMSG file
 
 ### Code Review
 
-You can use `codegpt` to generate a code review message for your staged changes:
+You can use `zcode` to generate a code review message for your staged changes:
 
 ```sh
-codegpt review
+zcode review
 ```
 
 or translate all code review messages into a different language (`Traditional Chinese`, `Simplified Chinese` or `Japanese`)
 
 ```sh
-codegpt review --lang zh-tw
+zcode review --lang zh-tw
 ```
 
 See the following result:

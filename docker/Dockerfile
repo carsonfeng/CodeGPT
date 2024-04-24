@@ -15,6 +15,6 @@ LABEL org.opencontainers.image.licenses=MIT
 RUN apk add --no-cache ca-certificates git && \
   rm -rf /var/cache/apk/*
 
-COPY release/${TARGETOS}/${TARGETARCH}/codegpt /bin/
+COPY release/${TARGETOS}/${TARGETARCH}/zcode /bin/
 
-CMD ["/bin/codegpt"]
+CMD ["/bin/zcode"]
