@@ -26,6 +26,7 @@ func init() {
 	reviewCmd.Flags().StringSliceVar(&excludeList, "exclude_list", []string{}, "exclude file from git diff command")
 	reviewCmd.Flags().BoolVar(&commitAmend, "amend", false, "replace the tip of the current branch by creating a new commit.")
 	reviewCmd.Flags().StringVar(&diffTagPrefix, "diff_tag_prefix", "", "review latest two tags commit changes diff")
+	reviewCmd.Flags().StringVar(&commitId, "commit_id", "", "review commit changes diff")
 }
 
 var reviewCmd = &cobra.Command{
@@ -41,6 +42,7 @@ var reviewCmd = &cobra.Command{
 			git.WithExcludeList(viper.GetStringSlice("git.exclude_list")),
 			git.WithEnableAmend(commitAmend),
 			git.WithDiffTagPrefix(diffTagPrefix),
+			git.WithCommitId(commitId),
 		)
 
 		diff, err := g.DiffFiles()

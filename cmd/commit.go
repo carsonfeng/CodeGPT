@@ -32,6 +32,7 @@ var (
 	templateString string
 	commitAmend    bool
 	diffTagPrefix  string
+	commitId       string
 	timeout        time.Duration
 	promptOnly     bool
 
