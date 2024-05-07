@@ -39,7 +39,7 @@ func (c *Command) excludeFiles() []string {
 }
 
 // IsDiffTag judge whether to compare the differences between the latest two tags
-func (c *Command) IsDiffTag() (is bool, tag1, tag2 string) {
+func (c *Command) IsDiffTag() (is bool, tagNew, tagOld string) {
 	if c.diffTagPrefix != "" {
 		is = true
 		tagCmd := c.latestTwoTags(c.diffTagPrefix)
@@ -49,7 +49,7 @@ func (c *Command) IsDiffTag() (is bool, tag1, tag2 string) {
 		}
 		tags := strings.Split(string(output), " ")
 		if len(tags) == 2 {
-			tag1, tag2 = tags[0], tags[1]
+			tagNew, tagOld = tags[0], tags[1]
 		}
 	}
 	return
@@ -69,8 +69,8 @@ func (c *Command) diffNames() *exec.Cmd {
 	}
 
 	if c.diffTagPrefix != "" {
-		if is, tag1, tag2 := c.IsDiffTag(); is && tag1 != "" && tag2 != "" {
-			args = append(args, tag1, tag2)
+		if is, tagNew, tagOld := c.IsDiffTag(); is && tagNew != "" && tagOld != "" {
+			args = append(args, tagOld, tagNew)
 		}
 	} else {
 		if c.commitId != "" {
@@ -100,8 +100,8 @@ func (c *Command) diffFiles() *exec.Cmd {
 	}
 
 	if c.diffTagPrefix != "" {
-		if is, tag1, tag2 := c.IsDiffTag(); is && tag1 != "" && tag2 != "" {
-			args = append(args, tag1, tag2)
+		if is, tagNew, tagOld := c.IsDiffTag(); is && tagNew != "" && tagOld != "" {
+			args = append(args, tagOld, tagNew)
 		}
 	} else {
 		if c.commitId != "" {
