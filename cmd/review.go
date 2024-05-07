@@ -50,8 +50,8 @@ var reviewCmd = &cobra.Command{
 			return err
 		}
 
-		if is, tag1, tag2 := g.IsDiffTag(); is && tag1 != "" && tag2 != "" {
-			color.Green("Code review your changes between " + tag1 + " and " + tag2 + ", using " + viper.GetString("openai.model") + " model")
+		if is, tagNew, tagOld := g.IsDiffTag(); is && tagNew != "" && tagOld != "" {
+			color.Green("Code review your changes between " + tagOld + " and " + tagNew + ", using " + viper.GetString("openai.model") + " model")
 		} else {
 			color.Green("Code review your changes using " + viper.GetString("openai.model") + " model")
 		}
