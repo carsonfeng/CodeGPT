@@ -21,12 +21,13 @@ var maxTokens int
 func init() {
 	reviewCmd.Flags().IntVar(&diffUnified, "diff_unified", 3, "generate diffs with <n> lines of context, default is 3")
 	reviewCmd.Flags().IntVar(&maxTokens, "max_tokens", 300, "the maximum number of tokens to generate in the chat completion.")
-	reviewCmd.Flags().StringVar(&commitModel, "model", "gpt-3.5-turbo", "select openai model")
+	reviewCmd.Flags().StringVar(&commitModel, "model", openai.DefaultModel, "select openai model")
 	reviewCmd.Flags().StringVar(&commitLang, "lang", "en", "summarizing language uses English by default")
 	reviewCmd.Flags().StringSliceVar(&excludeList, "exclude_list", []string{}, "exclude file from git diff command")
 	reviewCmd.Flags().BoolVar(&commitAmend, "amend", false, "replace the tip of the current branch by creating a new commit.")
 	reviewCmd.Flags().StringVar(&diffTagPrefix, "diff_tag_prefix", "", "review latest two tags commit changes diff")
 	reviewCmd.Flags().StringVar(&commitId, "commit_id", "", "review commit changes diff")
+	reviewCmd.Flags().StringSliceVar(&diffList, "diff", []string{}, "review two tags or branch diff")
 }
 
 var reviewCmd = &cobra.Command{
@@ -42,6 +43,7 @@ var reviewCmd = &cobra.Command{
 			git.WithExcludeList(viper.GetStringSlice("git.exclude_list")),
 			git.WithEnableAmend(commitAmend),
 			git.WithDiffTagPrefix(diffTagPrefix),
+			git.WithDiffList(diffList),
 			git.WithCommitId(commitId),
 		)
 

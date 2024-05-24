@@ -48,6 +48,7 @@ func init() {
 	_ = viper.BindPFlag("git.template_file", configSetCmd.Flags().Lookup("template_file"))
 	_ = viper.BindPFlag("git.template_string", configSetCmd.Flags().Lookup("template_string"))
 	_ = viper.BindPFlag("git.diff_tag_prefix", configSetCmd.Flags().Lookup("diff_tag_prefix"))
+	_ = viper.BindPFlag("git.diff", configSetCmd.Flags().Lookup("diff"))
 	_ = viper.BindPFlag("git.commit_id", configSetCmd.Flags().Lookup("commit_id"))
 	_ = viper.BindPFlag("openai.provider", configSetCmd.Flags().Lookup("provider"))
 	_ = viper.BindPFlag("openai.model_name", configSetCmd.Flags().Lookup("model_name"))

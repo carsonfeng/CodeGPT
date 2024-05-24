@@ -219,11 +219,11 @@ func (cfg *config) valid() error {
 		return errorsMissingToken
 	}
 
-	// Check that the model exists in the model maps.
-	modelExists := modelMaps[cfg.model] != ""
-	if !modelExists {
-		return errorsMissingModel
-	}
+	//// Check that the model exists in the model maps.
+	//modelExists := modelMaps[cfg.model] != ""
+	//if !modelExists {
+	//	return errorsMissingModel
+	//}
 
 	// If the provider is Azure, check that the model name is not empty.
 	if cfg.provider == AZURE && cfg.modelName == "" {

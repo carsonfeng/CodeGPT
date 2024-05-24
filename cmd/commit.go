@@ -26,6 +26,7 @@ var (
 	preview        bool
 	diffUnified    int
 	excludeList    []string
+	diffList       []string
 	httpsProxy     string
 	socksProxy     string
 	templateFile   string
@@ -46,7 +47,7 @@ func init() {
 	commitCmd.PersistentFlags().StringP("file", "f", "", "commit message file")
 	commitCmd.PersistentFlags().BoolVar(&preview, "preview", false, "preview commit message")
 	commitCmd.PersistentFlags().IntVar(&diffUnified, "diff_unified", 3, "generate diffs with <n> lines of context, default is 3")
-	commitCmd.PersistentFlags().StringVar(&commitModel, "model", "gpt-3.5-turbo", "select openai model")
+	commitCmd.PersistentFlags().StringVar(&commitModel, "model", openai.DefaultModel, "select openai model")
 	commitCmd.PersistentFlags().StringVar(&commitLang, "lang", "en", "summarizing language uses English by default")
 	commitCmd.PersistentFlags().StringSliceVar(&excludeList, "exclude_list", []string{}, "exclude file from git diff command")
 	commitCmd.PersistentFlags().StringVar(&httpsProxy, "proxy", "", "http proxy")

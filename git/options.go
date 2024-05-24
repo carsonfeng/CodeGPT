@@ -50,6 +50,13 @@ func WithDiffTagPrefix(val string) Option {
 	})
 }
 
+func WithDiffList(val []string) Option {
+	return optionFunc(func(c *config) {
+		c.diffList = val
+		//fmt.Printf("diffTagPrefix: %s\n", c.diffTagPrefix)
+	})
+}
+
 // WithCommitId returns an Option that sets the commitId field of a config object to the given value.
 func WithCommitId(val string) Option {
 	return optionFunc(func(c *config) {
@@ -63,5 +70,6 @@ type config struct {
 	excludeList   []string
 	isAmend       bool
 	diffTagPrefix string
+	diffList      []string
 	commitId      string
 }

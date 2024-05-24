@@ -27,6 +27,7 @@ type Command struct {
 	excludeList   []string
 	isAmend       bool
 	diffTagPrefix string // review latest two tags commit changes diff tags is grep by this string. If empty, ignore this option.
+	diffList      []string
 	commitId      string // review commit changes diff by commit id. If empty, ignore this option.
 }
 
@@ -72,6 +73,8 @@ func (c *Command) diffNames() *exec.Cmd {
 		if is, tagNew, tagOld := c.IsDiffTag(); is && tagNew != "" && tagOld != "" {
 			args = append(args, tagOld, tagNew)
 		}
+	} else if len(c.diffList) > 0 {
+		args = append(args, c.diffList...)
 	} else {
 		if c.commitId != "" {
 			args = append(args, c.commitId)
@@ -98,11 +101,12 @@ func (c *Command) diffFiles() *exec.Cmd {
 		"--diff-algorithm=minimal",
 		"--unified=" + strconv.Itoa(c.diffUnified),
 	}
-
 	if c.diffTagPrefix != "" {
 		if is, tagNew, tagOld := c.IsDiffTag(); is && tagNew != "" && tagOld != "" {
 			args = append(args, tagOld, tagNew)
 		}
+	} else if len(c.diffList) > 0 {
+		args = append(args, c.diffList...)
 	} else {
 		if c.commitId != "" {
 			args = append(args, c.commitId)
@@ -253,6 +257,7 @@ func New(opts ...Option) *Command {
 		isAmend:       cfg.isAmend,
 		diffTagPrefix: cfg.diffTagPrefix,
 		commitId:      cfg.commitId,
+		diffList:      cfg.diffList,
 	}
 
 	return cmd

@@ -19,7 +19,7 @@ func (m Model) IsVaild() bool {
 	case LLaMA3_70b:
 		return true
 	default:
-		return false
+		return true
 	}
 }
 
@@ -30,7 +30,7 @@ var model = map[Model]string{
 // GetModel returns the model name.
 func GetModel(modelName Model) string {
 	if _, ok := model[modelName]; !ok {
-		return model[LLaMA3_70b]
+		return string(modelName)
 	}
 	return model[modelName]
 }
