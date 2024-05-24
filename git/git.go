@@ -81,7 +81,7 @@ func (c *Command) diffNames() *exec.Cmd {
 		} else if c.isAmend {
 			args = append(args, "HEAD^", "HEAD")
 		} else {
-			args = append(args, "--staged")
+			//args = append(args, "--staged")
 		}
 	}
 
@@ -113,7 +113,7 @@ func (c *Command) diffFiles() *exec.Cmd {
 		} else if c.isAmend {
 			args = append(args, "HEAD^", "HEAD")
 		} else {
-			args = append(args, "--staged")
+			//args = append(args, "--staged")
 		}
 	}
 
