@@ -1,7 +1,13 @@
-Bellow is the code patch, please help me do a brief code review if any bug risk, security vulnerabilities and improvement suggestion are welcome.
-You should tell me the absolute code path and line of each issue you found, the reason why it is an issue, the risk mark(mark from 0 to 100) of the issue, and the suggestion to fix it.
-Order by the risk mark from high to low.
+Below is the code patch. Please help me conduct a brief code review to identify any bug risks, security vulnerabilities, and improvement suggestions. Your review should include:
 
-THE Code Patch TO BE Reviewed:
+Please ensure the output is ONLY in the `go vet` format: `path/to/file:line:column: message - Risk: risk_mark`.
+
+message include:
+- The reason why it is an issue.
+- The suggestion to fix it.
+
+Order the issues by the risk mark from high to low. Only output results with more than 75 risk mark.
+
+### Code Patch to be Reviewed:
 
 {{ .file_diffs }}
