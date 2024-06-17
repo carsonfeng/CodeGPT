@@ -222,6 +222,10 @@ func (c *Client) Completion(
 	return resp, nil
 }
 
+func (c *Client) GetModel() string {
+	return c.model
+}
+
 // New creates a new OpenAI API client with the given options.
 func New(opts ...Option) (*Client, error) {
 	// Create a new config object with the given options.

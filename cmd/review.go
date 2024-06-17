@@ -129,6 +129,7 @@ var reviewCmd = &cobra.Command{
 
 		// Output core review summary
 		color.Yellow("================Review Summary====================")
+		color.Yellow("Model: " + client.GetModel() + "\n")
 		color.Yellow("\n" + strings.TrimSpace(summarizeMessage) + "\n\n")
 		color.Yellow("==================================================")
 
